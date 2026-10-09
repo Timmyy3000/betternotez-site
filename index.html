@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <script>
-      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion')
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) { document.documentElement.classList.add('motion'); setTimeout(() => window.bnzReady || document.documentElement.classList.remove('motion'), 4000) }
     </script>
     <title>BetterNotez · Your lectures, annotated</title>
     <meta name="description" content="A free, open-source study app for lecture PDFs. Annotate, take notes, plan your week. Your files stay on your computer." />
@@ -51,13 +51,13 @@
         <p class="lede">A study app for lecture PDFs. Your files stay on your computer.</p>
 
         <div class="get" role="group" aria-label="Download BetterNotez">
-          <a class="os" data-os="mac" href="https://github.com/Timmyy3000/BetterNotez/releases/download/v0.1.0/BetterNotez_0.1.0_aarch64.dmg" aria-label="Download for Mac, Apple silicon">
+          <a class="os" data-os="mac" href="https://github.com/Timmyy3000/BetterNotez/releases/download/v0.2.0/BetterNotez_0.2.0_aarch64.dmg" aria-label="Download for Mac, Apple silicon">
             <svg data-icon="apple" aria-hidden="true"></svg><span class="tip">Mac · Apple silicon</span>
           </a>
-          <a class="os" data-os="mac-intel" href="https://github.com/Timmyy3000/BetterNotez/releases/download/v0.1.0/BetterNotez_0.1.0_x64.dmg" aria-label="Download for Mac, Intel">
+          <a class="os" data-os="mac-intel" href="https://github.com/Timmyy3000/BetterNotez/releases/download/v0.2.0/BetterNotez_0.2.0_x64.dmg" aria-label="Download for Mac, Intel">
             <svg data-icon="apple" aria-hidden="true"></svg><i class="chip">Intel</i><span class="tip">Mac · Intel</span>
           </a>
-          <a class="os" data-os="windows" href="https://github.com/Timmyy3000/BetterNotez/releases/download/v0.1.0/BetterNotez_0.1.0_x64-setup.exe" aria-label="Download for Windows">
+          <a class="os" data-os="windows" href="https://github.com/Timmyy3000/BetterNotez/releases/download/v0.2.0/BetterNotez_0.2.0_x64-setup.exe" aria-label="Download for Windows">
             <svg data-icon="windows" aria-hidden="true"></svg><span class="tip">Windows</span>
           </a>
           <a class="os" data-os="linux" href="https://github.com/Timmyy3000/BetterNotez/releases" aria-label="Download for Linux">
@@ -72,7 +72,7 @@
 
       <section class="desk" aria-label="What BetterNotez does">
         <div class="desk-pin">
-          <ol class="captions" aria-hidden="true">
+          <ol class="captions">
             <li><b>Annotate</b><span>Write and draw on any page.</span></li>
             <li><b>Organize</b><span>One shelf for each subject.</span></li>
             <li><b>Plan</b><span>Put your classes on the week.</span></li>
@@ -103,7 +103,7 @@
 
       <section class="end">
         <p class="h2 big">Free. Open source.<br /><em>Yours.</em></p>
-        <div class="get get-end" role="group" aria-label="Download BetterNotez"></div>
+        <div class="get get-end" aria-hidden="true" inert></div>
       </section>
     </main>
 

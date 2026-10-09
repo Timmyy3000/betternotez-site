@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { APPS } from './apps.js'
 import { ICONS, hydrateIcons } from './icons.js'
 
+window.bnzReady = true
 const motion = document.documentElement.classList.contains('motion')
 const finePointer = matchMedia('(pointer: fine)').matches
 
@@ -37,7 +38,7 @@ function detectOs() {
 function markVisitorOs() {
   const os = detectOs()
   if (os === null) return
-  for (const link of document.querySelectorAll(`.os[data-os="${os}"]`)) link.classList.add('is-yours')
+  for (const link of document.querySelectorAll(`.os[data-os^="${os}"]`)) link.classList.add('is-yours')
 }
 
 async function loadStars() {
@@ -117,16 +118,16 @@ function ink() {
       ctx.globalAlpha = 1 - Math.max(0, age - LIFE * 0.4) / (LIFE * 0.6)
       ctx.strokeStyle = '#ef5b3f'
       ctx.lineCap = ctx.lineJoin = 'round'
-      ctx.beginPath()
       const sy = scrollY
       for (let j = 1; j < s.pts.length; j++) {
         const [x0, y0] = s.pts[j - 1]
         const [x1, y1, w] = s.pts[j]
         ctx.lineWidth = w
+        ctx.beginPath()
         ctx.moveTo(x0, y0 - sy)
         ctx.lineTo(x1, y1 - sy)
+        ctx.stroke()
       }
-      ctx.stroke()
     }
     raf = strokes.length ? requestAnimationFrame(loop) : 0
   }
@@ -246,6 +247,8 @@ function setupModal() {
   let origin = null
 
   const open = (button) => {
+    gsap.killTweensOf(card)
+    gsap.set(card, { clearProps: 'all' })
     app = APPS[button.dataset.app]
     origin = button
     dialog.querySelector('h3').textContent = app.name
@@ -277,6 +280,7 @@ function setupModal() {
 
   const close = () => {
     if (!motion || !origin) return dialog.close()
+    gsap.killTweensOf(card)
     const from = origin.getBoundingClientRect()
     const to = card.getBoundingClientRect()
     gsap.to(card, {
@@ -300,7 +304,9 @@ function setupModal() {
     e.preventDefault()
     close()
   })
-  dialog.addEventListener('click', (e) => e.target === dialog && close())
+  let downOnBackdrop = false
+  dialog.addEventListener('pointerdown', (e) => (downOnBackdrop = e.target === dialog))
+  dialog.addEventListener('click', (e) => downOnBackdrop && e.target === dialog && close())
 
   copy.addEventListener('click', async () => {
     try {
