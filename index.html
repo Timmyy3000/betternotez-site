@@ -2,306 +2,131 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <script>
-      // Motion runs only when the visitor has not asked for less of it.
-      // Without this class, every element shows its final state.
-      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        document.documentElement.classList.add('motion')
-      }
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion')
     </script>
-
-    <title>BetterNotez: study lecture PDFs on your computer</title>
-    <meta
-      name="description"
-      content="BetterNotez is a free, open-source study app for lecture PDFs. Annotate pages, keep notes, search, and plan your week. No account needed."
-    />
-    <meta name="theme-color" content="#f4efe4" />
-    <meta name="color-scheme" content="light" />
+    <title>BetterNotez · Your lectures, annotated</title>
+    <meta name="description" content="A free, open-source study app for lecture PDFs. Annotate, take notes, plan your week. Your files stay on your computer." />
+    <meta name="theme-color" content="#14110d" />
+    <meta name="color-scheme" content="dark" />
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
-
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="BetterNotez" />
-    <meta property="og:title" content="BetterNotez: study lecture PDFs on your computer" />
-    <meta property="og:description" content="A free, open-source study app for lecture PDFs. No account needed." />
+    <meta property="og:title" content="BetterNotez · Your lectures, annotated" />
+    <meta property="og:description" content="A free, open-source study app for lecture PDFs. Your files stay on your computer." />
     <meta property="og:url" content="https://betternotez.timi.click/" />
-    <meta property="og:image" content="https://betternotez.timi.click/screenshots/lecture-notes.png" />
+    <meta property="og:image" content="https://betternotez.timi.click/og.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
-
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "BetterNotez",
-        "description": "A free, open-source study app for lecture PDFs. Annotate pages, keep notes, search, and plan your week.",
-        "applicationCategory": "EducationalApplication",
-        "operatingSystem": "macOS, Windows, Linux",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-        "license": "https://www.gnu.org/licenses/agpl-3.0.html",
-        "codeRepository": "https://github.com/Timmyy3000/BetterNotez"
-      }
-    </script>
-    <script type="module" src="/src/main.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+    <link rel="preload" as="image" href="./shots/lecture.webp" />
   </head>
-
   <body>
-    <a class="skip-link" href="#main">Skip to content</a>
+    <canvas id="ink" aria-hidden="true"></canvas>
 
-    <header class="site-header">
-      <div class="wrap header-row">
-        <a class="brand" href="#top">BetterNotez</a>
-        <nav class="site-nav" aria-label="Main">
-          <a class="hide-sm" href="#features">Features</a>
-          <a class="hide-sm" href="#connect">AI assistant</a>
-          <a href="#download">Download</a>
-          <a href="https://github.com/Timmyy3000/BetterNotez">GitHub</a>
-        </nav>
-      </div>
-    </header>
+    <a class="mark" href="#top" aria-label="BetterNotez, back to top">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h12v20l-6-4.5L6 22z" /></svg>
+      <span>BetterNotez</span>
+    </a>
 
-    <main id="main">
-      <section class="hero" id="top" aria-labelledby="hero-title">
-        <div class="wrap hero-grid">
-          <div class="hero-copy">
-            <p class="eyebrow" data-enter>Free and open source</p>
+    <a class="stars" href="https://github.com/Timmyy3000/BetterNotez" target="_blank" rel="noopener" aria-label="BetterNotez on GitHub">
+      <svg data-icon="github" aria-hidden="true"></svg>
+      <span class="stars-count" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z" /></svg><b>0</b></span>
+    </a>
 
-            <h1 class="hero-title" id="hero-title"><span class="word">Better</span><em class="word">Notez</em></h1>
+    <main id="top">
+      <section class="hero">
+        <p class="kicker"><span>Free</span><span>Open source</span><span>No account</span></p>
+        <h1 class="title" aria-label="Your lectures, annotated.">
+          <span class="line"><span class="word">Your</span> <span class="word">lectures,</span></span>
+          <span class="line"><em class="word">annotated<span class="dot">.</span></em>
+            <svg class="scribble" viewBox="0 0 520 40" preserveAspectRatio="none" aria-hidden="true"><path d="M6 28C90 12 190 8 280 16s170 14 230 2" /></svg>
+          </span>
+        </h1>
+        <p class="lede">A study app for lecture PDFs. Your files stay on your computer.</p>
 
-            <p class="lede" data-enter>
-              Annotate your lecture PDFs. Keep a <span class="ink-mark">notepad<svg class="ink-line" data-ink viewBox="0 0 200 16" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 10 C 42 4, 80 14, 122 8 S 180 5, 197 9" /></svg></span> for each lecture.
-            </p>
-
-            <p class="hero-note" data-enter>No account. Your library is a folder of plain files on your computer.</p>
-
-            <div class="downloads" id="download" data-enter>
-              <div class="platform" data-platform="mac">
-                <p class="platform-label">macOS <span class="tag" hidden>Your computer</span></p>
-                <div class="platform-buttons">
-                  <a class="btn" href="https://github.com/Timmyy3000/BetterNotez/releases/download/v0.1.0/BetterNotez_0.1.0_aarch64.dmg">Apple silicon</a>
-                  <a class="btn" href="https://github.com/Timmyy3000/BetterNotez/releases/download/v0.1.0/BetterNotez_0.1.0_x64.dmg">Intel</a>
-                </div>
-              </div>
-
-              <div class="platform" data-platform="windows">
-                <p class="platform-label">Windows <span class="tag" hidden>Your computer</span></p>
-                <div class="platform-buttons">
-                  <a class="btn" href="https://github.com/Timmyy3000/BetterNotez/releases/download/v0.1.0/BetterNotez_0.1.0_x64-setup.exe">Installer (.exe)</a>
-                </div>
-              </div>
-            </div>
-
-            <ul class="other-links" data-enter>
-              <li><a href="https://github.com/Timmyy3000/BetterNotez/releases">All releases, including Linux</a></li>
-              <li><a href="https://timmyy3000.github.io/BetterNotez/">Web app</a></li>
-              <li><a href="https://github.com/Timmyy3000/BetterNotez">Source code</a></li>
-            </ul>
-            <p class="fine" data-enter>The web app runs in your browser. It keeps your library in that browser and cannot connect an AI assistant.</p>
-          </div>
-
-          <figure class="sheet" data-sheet>
-            <img
-              src="./screenshots/lecture-notes.png"
-              width="1280"
-              height="720"
-              fetchpriority="high"
-              alt="A lecture page with typed text and black ink lines. The notepad on the right says: Remember the truth table."
-            />
-          </figure>
+        <div class="get" role="group" aria-label="Download BetterNotez">
+          <a class="os" data-os="mac" href="https://github.com/Timmyy3000/BetterNotez/releases/download/v0.1.0/BetterNotez_0.1.0_aarch64.dmg" aria-label="Download for Mac, Apple silicon">
+            <svg data-icon="apple" aria-hidden="true"></svg><span class="tip">Mac · Apple silicon</span>
+          </a>
+          <a class="os" data-os="mac-intel" href="https://github.com/Timmyy3000/BetterNotez/releases/download/v0.1.0/BetterNotez_0.1.0_x64.dmg" aria-label="Download for Mac, Intel">
+            <svg data-icon="apple" aria-hidden="true"></svg><i class="chip">Intel</i><span class="tip">Mac · Intel</span>
+          </a>
+          <a class="os" data-os="windows" href="https://github.com/Timmyy3000/BetterNotez/releases/download/v0.1.0/BetterNotez_0.1.0_x64-setup.exe" aria-label="Download for Windows">
+            <svg data-icon="windows" aria-hidden="true"></svg><span class="tip">Windows</span>
+          </a>
+          <a class="os" data-os="linux" href="https://github.com/Timmyy3000/BetterNotez/releases" aria-label="Download for Linux">
+            <svg data-icon="linux" aria-hidden="true"></svg><span class="tip">Linux</span>
+          </a>
+          <span class="sep" aria-hidden="true"></span>
+          <a class="web" href="./app/">Try in browser <span aria-hidden="true">→</span></a>
         </div>
+
+        <p class="hint" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 21l3.5-1 12-12-2.5-2.5-12 12zM14.5 6l2.5 2.5" /></svg>Go on, draw on this page.</p>
       </section>
 
-      <section class="section features" id="features" aria-labelledby="features-title">
-        <div class="wrap">
-          <p class="eyebrow">01 / Features</p>
-          <h2 id="features-title">What you can do</h2>
-
-          <ol class="feature-list">
-            <li>
-              <span class="num" aria-hidden="true">01</span>
-              <div>
-                <h3>Subjects and lectures</h3>
-                <p>Make a subject for each class. Import lecture PDFs into it. A date is optional.</p>
-              </div>
-            </li>
-            <li>
-              <span class="num" aria-hidden="true">02</span>
-              <div>
-                <h3>Annotate pages</h3>
-                <p>Add text boxes. Draw freehand ink for diagrams with a mouse, touch, or stylus. Undo and redo your edits during a session.</p>
-              </div>
-            </li>
-            <li>
-              <span class="num" aria-hidden="true">03</span>
-              <div>
-                <h3>A notepad for each lecture</h3>
-                <p>Each lecture has its own notes. The notepad saves as you type.</p>
-              </div>
-            </li>
-            <li>
-              <span class="num" aria-hidden="true">04</span>
-              <div>
-                <h3>Search</h3>
-                <p>Find text in subject names, lecture titles, notepads, text boxes, and the PDF text itself.</p>
-              </div>
-            </li>
-            <li>
-              <span class="num" aria-hidden="true">05</span>
-              <div>
-                <h3>Export</h3>
-                <p>Save a lecture as a PDF with your annotations drawn on its pages. Any PDF viewer can open it.</p>
-              </div>
-            </li>
-            <li>
-              <span class="num" aria-hidden="true">06</span>
-              <div>
-                <h3>Planner and tasks</h3>
-                <p>Place a subject card in a time slot on the weekly planner. Move tasks through To do, Doing, and Done.</p>
-              </div>
-            </li>
+      <section class="desk" aria-label="What BetterNotez does">
+        <div class="desk-pin">
+          <ol class="captions" aria-hidden="true">
+            <li><b>Annotate</b><span>Write and draw on any page.</span></li>
+            <li><b>Organize</b><span>One shelf for each subject.</span></li>
+            <li><b>Plan</b><span>Put your classes on the week.</span></li>
+            <li><b>Track</b><span>To do, doing, done.</span></li>
+            <li><b>Find</b><span>Search every PDF and note.</span></li>
           </ol>
-
-          <p class="open-data"><strong>Open data.</strong> Your library is a folder of plain files. You can read them without the app.</p>
-
-          <div class="shelf">
-            <figure data-shot>
-              <img
-                src="./screenshots/subject-page.png"
-                width="1280"
-                height="720"
-                loading="lazy"
-                decoding="async"
-                alt="The Digital Systems subject page. It lists one lecture, Lecture 1 - Logic gates, dated Oct 12, 2026, with 2 pages."
-              />
-              <figcaption>A subject with its lectures</figcaption>
-            </figure>
-            <figure data-shot>
-              <img
-                src="./screenshots/planner-overlap.png"
-                width="1280"
-                height="720"
-                loading="lazy"
-                decoding="async"
-                alt="The weekly planner. Three classes overlap on Tuesday morning."
-              />
-              <figcaption>Overlapping classes in the planner</figcaption>
-            </figure>
-            <figure data-shot>
-              <img
-                src="./screenshots/tasks.png"
-                width="1280"
-                height="720"
-                loading="lazy"
-                decoding="async"
-                alt="The task board with three columns: To do, Doing, and Done."
-              />
-              <figcaption>The task board</figcaption>
-            </figure>
+          <div class="sheets">
+            <figure class="sheet"><img src="./shots/lecture.webp" width="1440" height="900" alt="A Comp Sci 101 lecture with a text box, a pen stroke, and notes beside the page" /></figure>
+            <figure class="sheet"><img src="./shots/subject.webp" width="1440" height="900" loading="lazy" alt="The Comp Sci 101 subject with its lectures" /></figure>
+            <figure class="sheet"><img src="./shots/planner.webp" width="1440" height="900" loading="lazy" alt="The weekly planner with classes placed by time" /></figure>
+            <figure class="sheet"><img src="./shots/tasks.webp" width="1440" height="900" loading="lazy" alt="The task board with To do, Doing, and Done columns" /></figure>
+            <figure class="sheet"><img src="./shots/search.webp" width="1440" height="900" loading="lazy" alt="Search results across lecture text and notes" /></figure>
           </div>
+          <div class="progress" aria-hidden="true"><i></i></div>
         </div>
       </section>
 
-      <section class="night" aria-labelledby="search-title">
-        <div class="wrap">
-          <p class="eyebrow">Search</p>
-          <h2 id="search-title">Find it in your lectures</h2>
-          <figure class="night-shot" data-shot>
-            <img
-              src="./screenshots/search-dark.png"
-              width="1280"
-              height="720"
-              loading="lazy"
-              decoding="async"
-              alt="Search in dark mode. The word Karnaugh matches page 2 of Lecture 1 in the Digital Systems subject."
-            />
-            <figcaption>Search finds words in the PDF text, notepads, and text boxes.</figcaption>
-          </figure>
-        </div>
+      <section class="ai" aria-labelledby="ai-title">
+        <h2 id="ai-title" class="h2">Bring your <em>AI</em>.</h2>
+        <p class="sub">It reads your lectures and writes notes with you. It can't delete a thing.</p>
+        <ul class="orbit" role="list">
+          <li><button class="app" data-app="claude" aria-haspopup="dialog"><svg data-icon="claude" aria-hidden="true"></svg><span>Claude</span></button></li>
+          <li><button class="app" data-app="claude-code" aria-haspopup="dialog"><svg data-icon="claude" aria-hidden="true"></svg><i class="badge">&gt;_</i><span>Claude Code</span></button></li>
+          <li><button class="app" data-app="chatgpt" aria-haspopup="dialog"><svg data-icon="openai" aria-hidden="true"></svg><span>ChatGPT</span></button></li>
+          <li><button class="app" data-app="codex" aria-haspopup="dialog"><svg data-icon="openai" aria-hidden="true"></svg><i class="badge">&gt;_</i><span>Codex</span></button></li>
+        </ul>
       </section>
 
-      <section class="section connect" id="connect" aria-labelledby="connect-title">
-        <div class="wrap">
-          <p class="eyebrow">02 / AI assistant</p>
-          <h2 id="connect-title">Connect an AI assistant</h2>
-          <p class="section-lede">An AI assistant that supports MCP can read your material and help you study. It can create and edit. It cannot delete. Only you can delete, in the app.</p>
-
-          <div class="connect-grid">
-            <ol class="steps">
-              <li>
-                <span class="step-num" aria-hidden="true">1</span>
-                <p>Install <a href="https://nodejs.org/">Node.js</a> 22 or newer.</p>
-              </li>
-              <li>
-                <span class="step-num" aria-hidden="true">2</span>
-                <p>Download <code>betternotez-mcp.mjs</code> from the <a href="https://github.com/Timmyy3000/BetterNotez/releases/latest">latest release</a>. Save it in a folder you will keep.</p>
-              </li>
-              <li>
-                <span class="step-num" aria-hidden="true">3</span>
-                <p>Add this to <code>claude_desktop_config.json</code>. Replace the path with the full path to the file. Then restart Claude Desktop.</p>
-              </li>
-            </ol>
-
-            <div class="demo">
-              <div class="snippet" data-block>
-                <div class="snippet-bar">
-                  <span>claude_desktop_config.json</span>
-                  <button class="copy" type="button" data-copy-target="config-json">Copy</button>
-                </div>
-                <pre><code id="config-json">{
-  "mcpServers": {
-    "betternotez": {
-      "command": "node",
-      "args": ["/absolute/path/to/betternotez-mcp.mjs"]
-    }
-  }
-}</code></pre>
-              </div>
-
-              <div class="chat" aria-label="Example chat with an assistant">
-                <p class="chat-caption" data-msg>Example chat</p>
-                <p class="msg msg-user" data-msg>Let's talk about Lecture 1 in Digital Systems in BetterNotez.</p>
-                <p class="msg msg-status" data-msg>Reading from BetterNotez...</p>
-                <p class="msg msg-assistant" data-msg>I found Lecture 1 in Digital Systems. I read its PDF text, your notepad, and your annotations. Where do you want to start?</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="connect-foot">
-            <div>
-              <p class="or-label">For Claude Code, run this once in a terminal:</p>
-              <div class="snippet">
-                <div class="snippet-bar">
-                  <span>Terminal</span>
-                  <button class="copy" type="button" data-copy-target="cc-command">Copy</button>
-                </div>
-                <pre><code id="cc-command">claude mcp add betternotez -- node /absolute/path/to/betternotez-mcp.mjs</code></pre>
-              </div>
-            </div>
-
-            <div class="connect-notes">
-              <p>Replace <code>/absolute/path/to/betternotez-mcp.mjs</code> with the full path to the file. The desktop app's Settings page shows both snippets with your library path filled in.</p>
-              <p>The server reads the BetterNotez Library folder in your home folder. To use another folder, add <code>"--library"</code> and the folder path to the arguments.</p>
-              <p>ChatGPT and other apps that support MCP servers can connect too. Their steps differ, so follow each app's own instructions.</p>
-            </div>
-          </div>
-
-          <p class="sr-only" id="copy-status" role="status" aria-live="polite"></p>
-        </div>
+      <section class="end">
+        <p class="h2 big">Free. Open source.<br /><em>Yours.</em></p>
+        <div class="get get-end" role="group" aria-label="Download BetterNotez"></div>
       </section>
     </main>
 
-    <footer class="site-footer">
-      <div class="wrap footer-grid">
-        <div>
-          <p class="footer-title">BetterNotez</p>
-          <p class="footer-text">BetterNotez is free and open source software. It is licensed under the GNU Affero General Public License, version 3 only (AGPL-3.0-only). If you run a modified version as a service, you must make your changes available under the same license.</p>
-        </div>
-        <ul class="footer-links">
-          <li><a href="https://github.com/Timmyy3000/BetterNotez">Source on GitHub</a></li>
-          <li><a href="https://github.com/Timmyy3000/BetterNotez/blob/main/LICENSE">License</a></li>
-          <li><a href="https://github.com/Timmyy3000/BetterNotez/releases">All releases</a></li>
-          <li><a href="https://timmyy3000.github.io/BetterNotez/">Web app</a></li>
-        </ul>
-      </div>
+    <footer class="foot">
+      <span>AGPL-3.0</span>
+      <a href="https://github.com/Timmyy3000/BetterNotez">Source</a>
+      <a href="https://github.com/Timmyy3000/BetterNotez/releases">All releases</a>
     </footer>
+
+    <dialog class="modal" aria-labelledby="modal-title">
+      <div class="card">
+        <button class="close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" /></svg></button>
+        <div class="card-head"><svg class="card-icon" aria-hidden="true"></svg><h3 id="modal-title"></h3></div>
+        <ol class="steps">
+          <li><b>1</b><span>Copy the setup prompt.</span></li>
+          <li><b>2</b><span class="paste"></span></li>
+          <li><b>3</b><span class="restart"></span></li>
+        </ol>
+        <button class="copy"><span class="copy-label">Copy prompt</span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2" /><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" /></svg></button>
+        <p class="fine">Needs the desktop app. The web app can't connect to an AI.</p>
+      </div>
+    </dialog>
+
+    <script type="module" src="./src/main.js"></script>
   </body>
 </html>
