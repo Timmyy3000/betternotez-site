@@ -132,6 +132,10 @@ em {
   fill: currentColor;
 }
 
+.stars-count[hidden] {
+  display: none;
+}
+
 .stars-count {
   display: inline-flex;
   align-items: center;
@@ -409,7 +413,12 @@ html:not(.motion) .hint {
     0 1px 0 rgb(0 0 0 / 0.1),
     0 18px 30px -12px rgb(0 0 0 / 0.6);
   cursor: grab;
-  touch-action: none;
+}
+
+@media (pointer: fine) {
+  .note {
+    touch-action: none;
+  }
 }
 
 .note small {
@@ -519,7 +528,17 @@ html:not(.motion) .hint {
   transform-origin: left;
 }
 
-html:not(.motion) .captions li:not(:first-child),
+html:not(.motion) .captions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 28px;
+}
+
+html:not(.motion) .captions span {
+  display: none;
+}
+
 html:not(.motion) .progress {
   display: none;
 }
@@ -694,6 +713,7 @@ html:not(.motion) .sheet {
 
 .close {
   position: absolute;
+  z-index: 1;
   top: 18px;
   right: 18px;
   display: grid;

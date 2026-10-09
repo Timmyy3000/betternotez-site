@@ -33,7 +33,7 @@ export const APPS = {
     name: 'Claude',
     icon: 'claude',
     prompt: CLAUDE,
-    paste: 'Paste it into a new Claude chat. Claude sets it up.',
+    paste: 'Paste it into Claude Desktop. It walks you through setup.',
     restart: `Quit Claude, open it again, and ${ASK}`,
   },
   'claude-code': {
