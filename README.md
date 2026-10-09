@@ -1,0 +1,1 @@
+# BetterNotez landing page
