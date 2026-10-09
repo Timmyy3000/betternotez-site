@@ -108,7 +108,7 @@ em {
 .mark svg {
   width: 16px;
   height: 16px;
-  fill: var(--ink);
+  fill: #f0785a;
 }
 
 .stars {
